@@ -1,0 +1,334 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.4
+-- Dumped by pg_dump version 9.2.4
+-- Started on 2013-11-28 12:04:25
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1964 (class 1262 OID 35717)
+-- Name: WASH; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE "WASH" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'English_United States.1252' LC_CTYPE = 'English_United States.1252';
+
+
+ALTER DATABASE "WASH" OWNER TO postgres;
+
+\connect "WASH"
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 7 (class 2615 OID 35718)
+-- Name: CARWASH; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA "CARWASH";
+
+
+ALTER SCHEMA "CARWASH" OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1967 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = "CARWASH", pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 170 (class 1259 OID 35724)
+-- Name: T_CARS; Type: TABLE; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "T_CARS" (
+    "ID" integer NOT NULL,
+    "ID_CLIENT" integer,
+    "PLAQUE" character varying(100),
+    "TYPE" character varying(50),
+    "MARK" character varying(50),
+    "MODEL" character varying(50),
+    "YEAR" integer
+);
+
+
+ALTER TABLE "CARWASH"."T_CARS" OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 35729)
+-- Name: T_CLIENTS; Type: TABLE; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "T_CLIENTS" (
+    "ID" integer NOT NULL,
+    "NAME" character varying(100),
+    "ADDRESS" character varying(100),
+    "TELEPHONE" character varying(15),
+    "EMAIL" character varying(50)
+);
+
+
+ALTER TABLE "CARWASH"."T_CLIENTS" OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 35734)
+-- Name: T_PRODUCTS; Type: TABLE; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "T_PRODUCTS" (
+    "ID" integer NOT NULL,
+    "NAME" character varying(100),
+    "PRICE" double precision,
+    "STOCK" integer
+);
+
+
+ALTER TABLE "CARWASH"."T_PRODUCTS" OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 35739)
+-- Name: T_SCHEDULE; Type: TABLE; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "T_SCHEDULE" (
+    "ID" integer NOT NULL,
+    "ID_CAR" integer,
+    "DATE" timestamp with time zone,
+    "TYPE" character varying(100),
+    "TOTAL" double precision
+);
+
+
+ALTER TABLE "CARWASH"."T_SCHEDULE" OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 35744)
+-- Name: T_SELLS; Type: TABLE; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "T_SELLS" (
+    "ID" integer NOT NULL,
+    "ID_VENDOR" integer,
+    "DATEOFSALE" timestamp with time zone,
+    "TOTAL" double precision
+);
+
+
+ALTER TABLE "CARWASH"."T_SELLS" OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 35749)
+-- Name: T_SELLSITEM; Type: TABLE; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "T_SELLSITEM" (
+    "ID" integer NOT NULL,
+    "ID_PRODUCT" integer,
+    "QNT" integer,
+    "ID_SELL" integer
+);
+
+
+ALTER TABLE "CARWASH"."T_SELLSITEM" OWNER TO postgres;
+
+--
+-- TOC entry 169 (class 1259 OID 35719)
+-- Name: T_USERS; Type: TABLE; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "T_USERS" (
+    "ID" integer NOT NULL,
+    "NAME" character varying(100),
+    "LOGIN" character varying(50),
+    "PASSWORD" character varying(50)
+);
+
+
+ALTER TABLE "CARWASH"."T_USERS" OWNER TO postgres;
+
+--
+-- TOC entry 1954 (class 0 OID 35724)
+-- Dependencies: 170
+-- Data for Name: T_CARS; Type: TABLE DATA; Schema: CARWASH; Owner: postgres
+--
+
+INSERT INTO "T_CARS" ("ID", "ID_CLIENT", "PLAQUE", "TYPE", "MARK", "MODEL", "YEAR") VALUES (3, 2, 'hgz1234', 'TRUCK', 'toyota', 'hilux', 2013);
+INSERT INTO "T_CARS" ("ID", "ID_CLIENT", "PLAQUE", "TYPE", "MARK", "MODEL", "YEAR") VALUES (1, 1, 'nus2349', 'SEDAN', 'Ford', 'Ranger', 2001);
+INSERT INTO "T_CARS" ("ID", "ID_CLIENT", "PLAQUE", "TYPE", "MARK", "MODEL", "YEAR") VALUES (4, 1, 'hil9021', 'SUV', 'GM', 'Blazer', 2000);
+
+
+--
+-- TOC entry 1955 (class 0 OID 35729)
+-- Dependencies: 171
+-- Data for Name: T_CLIENTS; Type: TABLE DATA; Schema: CARWASH; Owner: postgres
+--
+
+INSERT INTO "T_CLIENTS" ("ID", "NAME", "ADDRESS", "TELEPHONE", "EMAIL") VALUES (1, 'Pablo Mendez', 'North Street', '1290909090', 'pablo@email.com');
+INSERT INTO "T_CLIENTS" ("ID", "NAME", "ADDRESS", "TELEPHONE", "EMAIL") VALUES (2, 'Alexandre  Barros', 'Rua J da penha', '04040430334', 'alex@barros.com');
+INSERT INTO "T_CLIENTS" ("ID", "NAME", "ADDRESS", "TELEPHONE", "EMAIL") VALUES (3, 'Bruno MEsquita', 'rua leonardo mota', '342342342', 'bruno@mesquita.com');
+
+
+--
+-- TOC entry 1956 (class 0 OID 35734)
+-- Dependencies: 172
+-- Data for Name: T_PRODUCTS; Type: TABLE DATA; Schema: CARWASH; Owner: postgres
+--
+
+INSERT INTO "T_PRODUCTS" ("ID", "NAME", "PRICE", "STOCK") VALUES (1, 'Full Wash', 30, 5);
+INSERT INTO "T_PRODUCTS" ("ID", "NAME", "PRICE", "STOCK") VALUES (2, 'shampo', 1.5900000000000001, 0);
+INSERT INTO "T_PRODUCTS" ("ID", "NAME", "PRICE", "STOCK") VALUES (3, 'Support', 5.5, 8);
+
+
+--
+-- TOC entry 1957 (class 0 OID 35739)
+-- Dependencies: 173
+-- Data for Name: T_SCHEDULE; Type: TABLE DATA; Schema: CARWASH; Owner: postgres
+--
+
+INSERT INTO "T_SCHEDULE" ("ID", "ID_CAR", "DATE", "TYPE", "TOTAL") VALUES (1, 1, '2013-11-24 01:00:00-02', 'INTERNALWASH', 20.5);
+INSERT INTO "T_SCHEDULE" ("ID", "ID_CAR", "DATE", "TYPE", "TOTAL") VALUES (2, 3, '2013-11-24 01:00:00-02', 'OUTWASH', 12.33);
+
+
+--
+-- TOC entry 1958 (class 0 OID 35744)
+-- Dependencies: 174
+-- Data for Name: T_SELLS; Type: TABLE DATA; Schema: CARWASH; Owner: postgres
+--
+
+INSERT INTO "T_SELLS" ("ID", "ID_VENDOR", "DATEOFSALE", "TOTAL") VALUES (1, 4, '2013-11-24 01:00:00-02', 63.18);
+INSERT INTO "T_SELLS" ("ID", "ID_VENDOR", "DATEOFSALE", "TOTAL") VALUES (2, 4, '2013-11-25 01:00:00-02', 22);
+INSERT INTO "T_SELLS" ("ID", "ID_VENDOR", "DATEOFSALE", "TOTAL") VALUES (3, 1, '2013-11-27 01:00:00-02', 0);
+
+
+--
+-- TOC entry 1959 (class 0 OID 35749)
+-- Dependencies: 175
+-- Data for Name: T_SELLSITEM; Type: TABLE DATA; Schema: CARWASH; Owner: postgres
+--
+
+INSERT INTO "T_SELLSITEM" ("ID", "ID_PRODUCT", "QNT", "ID_SELL") VALUES (1, 1, 2, 1);
+INSERT INTO "T_SELLSITEM" ("ID", "ID_PRODUCT", "QNT", "ID_SELL") VALUES (2, 2, 2, 1);
+INSERT INTO "T_SELLSITEM" ("ID", "ID_PRODUCT", "QNT", "ID_SELL") VALUES (3, 3, 3, 2);
+INSERT INTO "T_SELLSITEM" ("ID", "ID_PRODUCT", "QNT", "ID_SELL") VALUES (4, 3, 1, 2);
+
+
+--
+-- TOC entry 1953 (class 0 OID 35719)
+-- Dependencies: 169
+-- Data for Name: T_USERS; Type: TABLE DATA; Schema: CARWASH; Owner: postgres
+--
+
+INSERT INTO "T_USERS" ("ID", "NAME", "LOGIN", "PASSWORD") VALUES (2, 'Other User', 'jack', '321');
+INSERT INTO "T_USERS" ("ID", "NAME", "LOGIN", "PASSWORD") VALUES (1, 'Administrator of system', 'adm', '123');
+INSERT INTO "T_USERS" ("ID", "NAME", "LOGIN", "PASSWORD") VALUES (3, 'David Marlon Brando', 'david', '321');
+INSERT INTO "T_USERS" ("ID", "NAME", "LOGIN", "PASSWORD") VALUES (4, 'Gustavo Medeiros Golias', 'gustavo', '123');
+
+
+--
+-- TOC entry 1942 (class 2606 OID 35728)
+-- Name: PK_CARS; Type: CONSTRAINT; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "T_CARS"
+    ADD CONSTRAINT "PK_CARS" PRIMARY KEY ("ID");
+
+
+--
+-- TOC entry 1944 (class 2606 OID 35733)
+-- Name: PK_CLIENTS; Type: CONSTRAINT; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "T_CLIENTS"
+    ADD CONSTRAINT "PK_CLIENTS" PRIMARY KEY ("ID");
+
+
+--
+-- TOC entry 1946 (class 2606 OID 35738)
+-- Name: PK_PRODUCTS; Type: CONSTRAINT; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "T_PRODUCTS"
+    ADD CONSTRAINT "PK_PRODUCTS" PRIMARY KEY ("ID");
+
+
+--
+-- TOC entry 1948 (class 2606 OID 35743)
+-- Name: PK_SCHEDULE; Type: CONSTRAINT; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "T_SCHEDULE"
+    ADD CONSTRAINT "PK_SCHEDULE" PRIMARY KEY ("ID");
+
+
+--
+-- TOC entry 1950 (class 2606 OID 35748)
+-- Name: PK_SELLS; Type: CONSTRAINT; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "T_SELLS"
+    ADD CONSTRAINT "PK_SELLS" PRIMARY KEY ("ID");
+
+
+--
+-- TOC entry 1952 (class 2606 OID 35753)
+-- Name: PK_SELLSITEM; Type: CONSTRAINT; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "T_SELLSITEM"
+    ADD CONSTRAINT "PK_SELLSITEM" PRIMARY KEY ("ID");
+
+
+--
+-- TOC entry 1940 (class 2606 OID 35723)
+-- Name: PK_USERS; Type: CONSTRAINT; Schema: CARWASH; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "T_USERS"
+    ADD CONSTRAINT "PK_USERS" PRIMARY KEY ("ID");
+
+
+--
+-- TOC entry 1966 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2013-11-28 12:04:26
+
+--
+-- PostgreSQL database dump complete
+--
+
